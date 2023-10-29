@@ -22,7 +22,7 @@ To run first clone this repository
 
 ### Back End
 
-This is a modified contract of the RrpRequester.sol file to add additional functions for placing bets and cashing out.
+This is a modified contract of the `RrpRequester.sol` file to add additional functions for placing bets and cashing out.
 
 The basic logic is that bettors can place bets on a particular winner of a racing championship and the contract can be completed by calling the collectWinnings() function, this calculates the winner of the racing championship based on the result of calling the API3 Sports Oracle.
 Sucessfull bettors are then issued tokens for their win.
