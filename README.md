@@ -41,3 +41,7 @@ See [EtherScan](https://goerli.etherscan.io/address/0x1412606EDD32aDcf938F6A4096
 
 Refer to the presentation  [here](/presentation/presentation.pdf) for more details on this project, future development and the intent of the rough prototype built above.
 
+
+![Initial](/presentation/screen1.png "Screen 1")
+
+![Place Bet](/presentation/screen2.png "Screen 2")
