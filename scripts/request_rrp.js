@@ -17,6 +17,9 @@ async function main() {
     "xpub6C9hFCLsUsU1dPMDaf5cDKiFwxUsET6zmAHxqLWaUBW2jJejjW2GpAxMY4HAeHkBGxeu9hdSyDoLJM7R23jGTfYekWjMcLvtvzrKszarDGY";
   const endpointId =
     "0x6e58ace4ab94d28da59ec1da675b513cc21a3ca9656228c0b052563a2eb88b3e";
+
+
+  const seasonResultsEndpointId = "0x2fb81fe04e44ace4c883cfbd7c6a14d607dafbee71c428d00abda1465697eb13"
   const sponsor = RrpRequester.address;
   const sponsorWallet = await airnodeAdmin.deriveSponsorWalletAddress(
     airnodeXpub,
@@ -36,20 +39,33 @@ async function main() {
   const encodedParameters = encode(params);
 
   // Make a request...
-  const receipt = await RrpRequesterContract.makeRequest(
-    airnodeAddress,
-    endpointId,
-    sponsor,
-    sponsorWallet,
-    encodedParameters,
-    { gasLimit: 500000 }
-  );
+  // const receipt = await RrpRequesterContract.makeRequest(
+  //   airnodeAddress,
+  //   endpointId, //endpointId
+  //   sponsor,
+  //   sponsorWallet,
+  //   encodedParameters,
+  //   { gasLimit: 500000 }
+  // );
+
+
+  // const makeBet = await RrpRequesterContract.addBettor(3, { value: ethers.utils.parseUnits("0.002", "ether") });
+
+
+  const claimWinnings = await RrpRequesterContract.claimWinnings(
+      airnodeAddress,
+      endpointId, //endpointId
+      sponsor,
+      sponsorWallet,
+      encodedParameters,
+      { gasLimit: 500000 }
+      );
   console.log(
     "Created a request transaction, waiting for it to be confirmed..."
   );
   // and read the logs once it gets confirmed to get the request ID
   const requestId = await new Promise((resolve) =>
-    hre.ethers.provider.once(receipt.hash, (tx) => {
+    hre.ethers.provider.once(makeBet.hash, (tx) => {
       // We want the log from RrpRequesterContract
       const log = tx.logs.find(
         (log) => log.address === RrpRequesterContract.address

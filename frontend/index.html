@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MetaMask Web3.js Example with Bootstrap</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>MetaMask Web3.js Example</h1>
+
+        <div class="row">
+            <div class="col">
+                <button id="connectButton" class="btn btn-primary">Connect to MetaMask</button>
+                <p id="account" class="mt-3">Account: N/A</p>
+            </div>
+        </div>
+
+        <h2 class="mt-5">Contract Function</h2>
+        <div class="row">
+            <div class="col">
+                <button id="callContractFunction" class="btn btn-success" disabled>Place Bet</button>
+                <input type="number" id="winnerId" name="winnerId"></input>
+                <p id="result" class="mt-3">Result: N/A</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and Popper.js (required for some Bootstrap components) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.5.2/web3.min.js"></script>
+    <script>
+        const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your contract address
+        const contractABI = [ /* Your contract's ABI here */ ]; // Replace with your contract's ABI
+
+        const connectButton = document.getElementById('connectButton');
+        const accountDisplay = document.getElementById('account');
+        const callButton = document.getElementById('callContractFunction');
+        const resultDisplay = document.getElementById('result');
+
+        let web3;
+        let contract;
+
+        // Function to connect to MetaMask
+        async function connectToMetaMask() {
+            if (window.ethereum) {
+                try {
+                    web3 = new Web3(window.ethereum);
+                    await window.ethereum.enable();
+                    const accounts = await web3.eth.getAccounts();
+                    const account = accounts[0];
+                    accountDisplay.textContent = `Account: ${account}`;
+                    contract = new web3.eth.Contract(contractABI, contractAddress);
+                    callButton.disabled = false;
+                } catch (error) {
+                    console.error(error);
+                }
+            } else {
+                accountDisplay.textContent = 'MetaMask not detected';
+            }
+        }
+
+        // Function to call the contract function
+        async function callContractFunction() {
+            try {
+                const result = await contract.methods.YOUR_CONTRACT_FUNCTION().call(); // Replace with your contract function name
+                resultDisplay.textContent = `Result: ${result}`;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        connectButton.addEventListener('click', connectToMetaMask);
+        callButton.addEventListener('click', callContractFunction);
+    </script>
+</body>
+</html>
