@@ -51,6 +51,7 @@ async function main() {
 
   // const makeBet = await RrpRequesterContract.addBettor(3, { value: ethers.utils.parseUnits("0.002", "ether") });
 
+  console.log("args for call are", airnodeAddress, endpointId, sponsor, sponsorWallet, encodedParameters)
 
   const claimWinnings = await RrpRequesterContract.claimWinnings(
       airnodeAddress,

@@ -10,7 +10,7 @@ import ContractABI from './RrpRequester.json';
 
 const contractAddress = 'YOUR_CONTRACT_ADDRESS';
 const contractABI = [/* Your contract's ABI here */];
-const sponsor = "0x1afB6039ff1DA423E58AE30E75aCFFACDA92cb84"
+const sponsor = "0xC655E33540F43B854ac80B9Ac403ed39F63d71a8"
 
 function Web3Example() {
   const [web3, setWeb3] = useState(null);
@@ -130,6 +130,9 @@ function Web3Example() {
     const encodedParameters = web3.eth.abi.encodeParameters(params.map(p => p.type), params.map(p => p.value));
 
     console.log(encodedParameters);
+
+    console.log("args for call are", airnodeAddress, endpointId, sponsor, sponsorWallet, encodedParameters)
+
     const contract = new web3.eth.Contract(ContractABI['abi'], sponsor);
     try{
         const receipt = await contract.methods.claimWinnings(
@@ -141,7 +144,7 @@ function Web3Example() {
             { gasLimit: 500000 }
           ).call();
 
-          console.log(receipt);
+          console.log("receipt", receipt);
     }catch (error){
         console.log(error)
     }
@@ -243,7 +246,7 @@ return (
         >
           Cash out 💵
         </Button>
-      </Card>
+      </Card>      
         </Paper>
     </ThemeProvider>
     );
